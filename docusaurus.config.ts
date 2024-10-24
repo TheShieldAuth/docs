@@ -106,7 +106,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Shield, Built with ❤️ by MKSingh.dev`,
+      copyright: `Copyright © ${new Date().getFullYear()} Shield, Built with ❤️ by <a href="https://mksingh.dev" target="_blank">MKSingh.dev</a>`,
     },
     prism: {
       theme: prismThemes.github,
