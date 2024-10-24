@@ -40,8 +40,7 @@ const config: Config = {
           routeBasePath: "/",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          // editUrl:
-          //  "https://github.com/shield-auth/shield-docs/tree/trunk/packages/create-docusaurus/templates/shared/",
+          editUrl: "https://github.com/shield-auth/docs/tree/trunk/",
         },
         theme: {
           customCss: "static/css/theme.css",
