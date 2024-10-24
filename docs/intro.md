@@ -9,7 +9,7 @@ Shield is a robust, multi-tenant authentication and authorization solution for
 modern age applications. It provides a comprehensive set of features to secure
 your applications and manage user access effectively.
 
-## Key Features
+## Key Feature
 
 - **Multi-tenant Support:** Manage multiple organizations or projects within a single instance.
 - **User Management:** Efficiently handle user accounts and permissions.
