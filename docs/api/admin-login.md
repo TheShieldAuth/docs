@@ -9,7 +9,9 @@ the user having `realm admin role` is going to be considered as admin.
 
 ## Endpoint
 
-`{YOUR-SHIELD-URL}/realms/:realm_id/clients/:client_id/admin-login`
+```bash
+{YOUR-SHIELD-URL}/realms/:realm_id/clients/:client_id/admin-login
+```
 
 Replace `:realm_id` with your realm ID and `:client_id` with your client ID.
 
