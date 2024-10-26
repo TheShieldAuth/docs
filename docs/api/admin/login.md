@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Admin Login
+# Login
 
 The Admin Login API is used to authenticate the admin user. For this api only
 the user having `realm admin role` is going to be considered as admin.
