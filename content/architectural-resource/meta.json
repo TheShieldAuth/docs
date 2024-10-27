@@ -1,0 +1,12 @@
+{
+  "title": "Architectural Resource",
+  "description": "Here you will find all the steps taken to build the Shield system.",
+  "icon": "Construction",
+  "pages": [
+    "resource-initialization",
+    "admin-login",
+    "create-api-user",
+    "signup-user",
+    "non-admin-login"
+  ]
+}
