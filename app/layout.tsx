@@ -1,4 +1,3 @@
-import { HomeLayout } from "fumadocs-ui/layouts/home";
 import "./global.css";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Inter } from "next/font/google";
