@@ -9,6 +9,8 @@ import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { getGithubLastEdit } from "fumadocs-core/server";
 import { Metadata } from "next";
+import TocContributorCard from "@/components/toc-contributor-card";
+import { getFileContributors } from "@/lib/utils/github";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -25,11 +27,24 @@ export default async function Page(props: {
     path: `content/${page.file.path}`,
   });
 
+  const contributors = await getFileContributors(
+    "shield-auth",
+    "docs",
+    `content/${page.file.path}`,
+  );
+
   return (
     <DocsPage
       toc={page.data.toc}
-      tableOfContent={{ style: "clerk" }}
-      tableOfContentPopover={{ style: "clerk" }}
+      tableOfContent={{
+        style: "clerk",
+        single: false,
+        footer: <TocContributorCard contributors={contributors} />,
+      }}
+      tableOfContentPopover={{
+        style: "clerk",
+        footer: <TocContributorCard contributors={contributors} />,
+      }}
       full={page.data.full}
       lastUpdate={time ? new Date(time) : undefined}
       editOnGithub={{
