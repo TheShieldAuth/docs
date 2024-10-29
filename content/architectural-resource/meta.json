@@ -7,6 +7,8 @@
     "admin-login",
     "create-api-user",
     "signup-user",
-    "non-admin-login"
+    "non-admin-login",
+    "refresh-token",
+    "introspection"
   ]
 }

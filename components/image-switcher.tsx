@@ -9,8 +9,16 @@ const ImageSwitcher = ({
 }) => {
   return (
     <div className="relative flex flex-1 h-full w-full aspect-auto">
-      <img src={darkSrc} alt={alt} className="hidden dark:block" />
-      <img src={lightSrc} alt={alt} className="block dark:hidden" />
+      <img
+        src={darkSrc}
+        alt={alt}
+        className="hidden dark:block object-contain"
+      />
+      <img
+        src={lightSrc}
+        alt={alt}
+        className="block dark:hidden object-contain"
+      />
     </div>
   );
 };
