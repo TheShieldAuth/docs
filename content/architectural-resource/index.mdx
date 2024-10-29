@@ -7,58 +7,36 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
 ## Resources
 
-<Steps>
-<Step>
-
-### [Resource Initialization](/architectural-resource/resource-initialization)
-
-On startup of the Shield server, the resource initialization process is triggered.
-
-</Step>
-<Step>
-
-### [Admin Login](/architectural-resource/admin-login)
-
-Once the will reach healthy state then Admin Login api can be used for creation of the API Key.
-
-</Step>
-<Step>
-
-### [Create API User](/architectural-resource/create-api-user)
-
-For any client related operations Like login, logout, password reset, etc. the
-API user is required. There can be more than one API user for a client and each
-API user can have different role.
-
-</Step>
-<Step>
-
-### [Signup user](/architectural-resource/signup-user)
-
-An API user can create or register a new user to its own client.
-
-</Step>
-<Step>
-
-### [Non Admin Login](/architectural-resource/non-admin-login)
-
-Regular (Non Admin) user can login to the client at this API endpoint.
-
-</Step>
-<Step>
-
-### [Refresh Token](/architectural-resource/refresh-token)
-
-Refresh token is used to refresh the session and generate a new set of token
-so that the user can continue to use the client without having to login again.
-
-</Step>
-<Step>
-
-### [Introspection](/architectural-resource/introspection)
-
-Introspection is used to get the current state of the token. Currently, we
-support only the access_token introspection.
-
-</Step>
-</Steps>
+<Cards>
+  <Card
+    title="Resource Initialization"
+    href="/architectural-resource/resource-initialization"
+  >
+    On startup of the Shield server, the resource initialization process is
+    triggered.
+  </Card>
+  <Card title="Admin Login" href="/architectural-resource/admin-login">
+    Once the will reach healthy state then Admin Login api can be used for
+    creation of the API Key.
+  </Card>
+  <Card title="Create API User" href="/architectural-resource/create-api-user">
+    For any client related operations Like login, logout, password reset, etc.
+    the API user is required. There can be more than one API user for a client
+    and each API user can have different role.
+  </Card>
+  <Card title="Signup user" href="/architectural-resource/signup-user">
+    An API user can create or register a new user to its own client.
+  </Card>
+  <Card title="Non Admin Login" href="/architectural-resource/non-admin-login">
+    Regular (Non Admin) user can login to the client at this API endpoint.
+  </Card>
+  <Card title="Refresh Token" href="/architectural-resource/refresh-token">
+    Refresh token is used to refresh the session and generate a new set of token
+    so that the user can continue to use the client without having to login
+    again.
+  </Card>
+  <Card title="Introspection" href="/architectural-resource/introspection">
+    Introspection is used to get the current state of the token. Currently, we
+    support only the access_token introspection.
+  </Card>
+</Cards>

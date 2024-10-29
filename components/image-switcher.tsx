@@ -1,3 +1,5 @@
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+
 const ImageSwitcher = ({
   lightSrc,
   darkSrc,
@@ -22,5 +24,25 @@ const ImageSwitcher = ({
     </div>
   );
 };
+
+export const DarkImage = ({ src, alt }: { src: string; alt: string }) => (
+  <ImageZoom
+    src={src}
+    alt={alt}
+    width={1200}
+    height={630}
+    className="hidden dark:block object-contain"
+  />
+);
+
+export const LightImage = ({ src, alt }: { src: string; alt: string }) => (
+  <ImageZoom
+    src={src}
+    alt={alt}
+    width={1200}
+    height={630}
+    className="block dark:hidden object-contain"
+  />
+);
 
 export default ImageSwitcher;

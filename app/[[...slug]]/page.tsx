@@ -11,6 +11,8 @@ import { getGithubLastEdit } from "fumadocs-core/server";
 import { Metadata } from "next";
 import TocContributorCard from "@/components/toc-contributor-card";
 import { getFileContributors } from "@/lib/utils/github";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+import TocHeader from "@/components/toc-header";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -39,10 +41,12 @@ export default async function Page(props: {
       tableOfContent={{
         style: "clerk",
         single: false,
+        header: <TocHeader />,
         footer: <TocContributorCard contributors={contributors} />,
       }}
       tableOfContentPopover={{
         style: "clerk",
+        header: <TocHeader />,
         footer: <TocContributorCard contributors={contributors} />,
       }}
       full={page.data.full}
@@ -58,7 +62,12 @@ export default async function Page(props: {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX components={{ ...defaultMdxComponents }} />
+        <MDX
+          components={{
+            ...defaultMdxComponents,
+            img: (props) => <ImageZoom {...(props as any)} />,
+          }}
+        />
       </DocsBody>
     </DocsPage>
   );
