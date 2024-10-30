@@ -84,7 +84,9 @@ export async function generateMetadata(props: {
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
+  // return metadataImage.withImage(page.slugs, {
   return {
+    metadataBase: new URL("https://docs.shield.rs"),
     title: page.data.title,
     description: page.data.description,
     openGraph: {
