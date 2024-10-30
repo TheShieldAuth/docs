@@ -11,6 +11,10 @@ const config = {
         protocol: "https",
         hostname: "www.shield.rs",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
 };
