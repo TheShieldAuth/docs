@@ -4,10 +4,9 @@
   "icon": "Construction",
   "pages": [
     "resource-initialization",
-    "admin-login",
     "create-api-user",
     "signup-user",
-    "non-admin-login",
+    "login",
     "refresh-token",
     "introspection"
   ]
