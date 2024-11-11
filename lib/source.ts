@@ -3,6 +3,8 @@ import { createMDXSource } from "fumadocs-mdx";
 import { loader } from "fumadocs-core/source";
 import { icons } from "lucide-react";
 import { createElement } from "react";
+import { createOpenAPI } from "fumadocs-openapi/server";
+import { attachFile } from "fumadocs-openapi/server";
 
 export const source = loader({
   baseUrl: "/",
@@ -15,4 +17,8 @@ export const source = loader({
 
     if (icon in icons) return createElement(icons[icon as keyof typeof icons]);
   },
+});
+
+export const openapi = createOpenAPI({
+  // options
 });

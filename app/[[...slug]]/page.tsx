@@ -1,10 +1,5 @@
-import { source } from "@/lib/source";
-import {
-  DocsPage,
-  DocsBody,
-  DocsDescription,
-  DocsTitle,
-} from "fumadocs-ui/page";
+import { openapi, source } from "@/lib/source";
+import { DocsPage, DocsBody, DocsTitle } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { getGithubLastEdit } from "fumadocs-core/server";
@@ -60,12 +55,12 @@ export default async function Page(props: {
       }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
         <MDX
           components={{
             ...defaultMdxComponents,
             img: (props) => <ImageZoom {...(props as any)} />,
+            APIPage: openapi.APIPage,
           }}
         />
       </DocsBody>

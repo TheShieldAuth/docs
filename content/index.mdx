@@ -1,29 +1,102 @@
 ---
 title: Introduction
-description: Shield is a robust, multi-tenant authentication and authorization solution for modern age applications. It provides a comprehensive set of features to secure your applications and manage user access effectively.
+description: Shield is a robust, multi-tenant authentication and authorization solution for modern applications. Built with Rust for performance and security, it provides a comprehensive set of features to secure your applications and manage user access effectively.
 icon: Album
 ---
 
-## Key Features
+Shield is a robust, multi-tenant authentication and authorization solution for
+modern applications. Built with Rust for performance and security, it provides
+a comprehensive set of features to secure your applications and manage user
+access effectively.
 
-- **Multi-tenant Support:** Manage multiple organizations or projects within a
-  single instance.
-- **User Management:** Efficiently handle user accounts and permissions.
-- **Role-based Access Control (RBAC):** Define and manage user roles and permissions.
-- **Session Management:** Secure handling of user sessions.
-- **API Key Support:** Generate and manage API keys for secure programmatic access.
-  - API Key Rotation
-  - Rate Limiting
-  - Expiration
-  - Blacklisting and Whitelisting
-  - Revocation
+## Welcome to Shield
 
-> Coming Soon...
->
-> - Two-factor Authentication (2FA)
-> - Email Verification
-> - OAuth2 Support
-> - OpenID Connect Support
-> - SAML Support
-> - LDAP Support
-> - FIDO2 Support
+Shield is an enterprise-grade authentication and authorization microservice that
+prioritizes security, performance, and developer experience. Written in Rust, it
+ensures memory safety and concurrent operation while delivering blazing-fast
+authentication services for your applications.
+
+### Key Features
+
+#### Multi-tenant Architecture
+
+- **Organization Management:** Create and manage multiple organizations within a
+  single instance
+- **Isolated Data Storage:** Ensure complete data separation between tenants
+- **Custom Configurations:** Set tenant-specific authentication policies and rules
+
+#### Comprehensive User Management
+
+- **User Lifecycle:** Handle user registration, verification, and deactivation
+- **Profile Management:** Store and manage user profiles and preferences
+- **Password Policies:** Enforce strong password requirements and rotation policies
+
+#### Advanced Access Control
+
+- **Role-based Access Control (RBAC):**
+  - Define granular roles and permissions
+  - Hierarchical role structure
+  - Dynamic permission assignment
+  - Role inheritance support
+
+#### Robust Session Management
+
+- **Secure Session Handling:** JWT-based session management
+- **Configurable Session Policies:**
+  - Custom session duration
+  - Concurrent session limits
+  - Device tracking and management
+- **Session Monitoring:** Track and audit active sessions
+
+#### Enterprise-grade API Key Management
+
+- **Flexible Key Generation:**
+  - Customizable key formats
+  - Scope-based restrictions
+  - Environment-specific keys (development, staging, production)
+- **Security Features:**
+  - Automated key rotation
+  - Rate limiting controls
+  - Configurable expiration
+  - IP-based access controls (whitelist/blacklist)
+  - Instant key revocation
+  - Usage analytics and monitoring
+
+### Performance & Security
+
+- Built with Rust for maximum performance and safety
+- Minimal memory footprint
+- Designed for high-concurrency environments
+- Regular security audits and updates
+
+### Roadmap Features
+
+The following features are under active development and will be available in
+upcoming releases:
+
+#### Authentication Methods
+
+- Two-factor Authentication (2FA)
+- Email Verification
+- Social Authentication
+
+#### Enterprise Integration
+
+- OAuth2 Provider
+- OpenID Connect Support
+- SAML 2.0 Integration
+- LDAP Directory Services
+- FIDO2 Passwordless Authentication
+
+#### Additional Security Features
+
+- Brute-force Protection
+- Audit Logging
+- Compliance Reporting
+- Security Event Monitoring
+
+### Getting Started
+
+Visit our [Quick Start Guide](/getting-started) to begin integrating Shield into
+your application, or explore our [Usage Guide](/usage-guide/login) for detailed
+implementation guidance.

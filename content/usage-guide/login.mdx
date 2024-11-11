@@ -1,24 +1,21 @@
 ---
 title: Login
 description: The Admin Login API is used to authenticate the admin user. For this api only the user having `realm admin role` is going to be considered as admin.
+full: true
 ---
 
-## Endpoint
+This endpoint can be used for login. You have to provide the `email` and `password`
+of the user. The response will contain the `access_token` and `refresh_token`
+along with user and few other details.
 
-```bash
-{YOUR-SHIELD-URL}/realms/:realm_id/clients/:client_id/admin-login
-```
+## Playground
 
-Replace `:realm_id` with your realm ID and `:client_id` with your client ID.
-
-Example curl command:
-
-```bash
-curl -X POST \
-  https://shield.example.com/realms/:realm_id/clients/:client_id/admin-login \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "email": "admin@admin.com",
-    "password": "12345"
-  }'
-```
+<APIPage
+  document="assets/openapi.yml"
+  operations={[
+    {
+      path: "/realms/{REALM_ID}/clients/{CLIENT_ID}/auth/login",
+      method: "post",
+    },
+  ]}
+/>
