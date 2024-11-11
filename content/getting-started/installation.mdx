@@ -3,13 +3,9 @@ title: Installation
 description: We have a docker images for amd64 and arm64.
 ---
 
+We have a docker images for `amd64` and `arm64. You can find the docker image on [docker hub](https://hub.docker.com/r/shieldauth/shield)
+
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
-
-<Callout>
-
-You can find the docker image on [docker hub](https://hub.docker.com/r/shieldauth/shield)
-
-</Callout>
 
 ## Prerequisites
 
@@ -254,14 +250,8 @@ container ID for the shield container._
 </Accordion>
 </Accordions>
 
-🔄 Deployment Strategy
+### 🔄 Deployment Notes
+
 Choose your deployment option based on your needs:
 
-Development: Use **"Run from Source Code"** for full development capabilities <br />
-Testing/Staging: Use **"Run with Containerized Database"** for a complete isolated
-environment <br />
-Production: Use **"Run with External Database"** for better scalability and management
-
-Each option includes proper logging, health checks, and container management
-configurations. Refer to the full documentation for detailed configuration
-options and best practices.
+Each option includes proper logging, health checks, and container management configurations.
