@@ -1,5 +1,5 @@
 {
   "title": "Usage Guide",
   "description": "You will find all the APIs guides here for easy integration.",
-  "pages": ["login"]
+  "pages": ["api-user", "users", "auth"]
 }
