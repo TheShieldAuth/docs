@@ -5,7 +5,7 @@
   "pages": [
     "resource-initialization",
     "create-api-user",
-    "signup-user",
+    "user-registration",
     "login",
     "refresh-token",
     "introspection"

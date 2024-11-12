@@ -1,0 +1,19 @@
+---
+title: Login
+description: This endpoint is used to authenticate a user and obtain access and refresh tokens.
+full: true
+---
+
+This endpoint is used to authenticate a user and obtain `access_token` and `refresh_token`.
+
+## Playground
+
+<APIPage
+  document="assets/openapi.yml"
+  operations={[
+    {
+      path: "/realms/{REALM_ID}/clients/{CLIENT_ID}/auth/login",
+      method: "post",
+    },
+  ]}
+/>

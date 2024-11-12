@@ -1,0 +1,5 @@
+{
+  "title": "API User",
+  "description": "An API user is commonly known as **API Key**. While creating the user you can assign **scope** and **access** with expiration date. The `api-key` will be generated at the time of creation of the user and will be used for further API calls.",
+  "pages": ["create", "get", "update", "delete"]
+}
