@@ -46,9 +46,9 @@ export default function Layout({ children }: { children: ReactNode }) {
               <div className="sticky top-0 -z-10 w-full">
                 <div className="absolute w-full h-64 max-h-screen">
                   <div className="flex flex-1 justify-center">
-                    <div className="absolute blur-xl opacity-75 bg-gradient-to-b from-orange-700 w-full -top-40 h-96 rounded-full to-transparent" />
+                    <div className="absolute blur-xl opacity-75 bg-gradient-to-b from-orange-700 w-full -top-40 h-96 to-transparent" />
                   </div>
-                  <div className="flex flex-1 h-full mt-10 justify-end lg:mx-80">
+                  <div className="flex flex-1 h-full mt-10 justify-end lg:mx-auto max-w-3xl">
                     <Image
                       src="/shield.svg"
                       alt="Shield"
