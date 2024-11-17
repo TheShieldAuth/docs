@@ -19,13 +19,13 @@ export default async function Page(props: {
   const MDX = page.data.body;
 
   const time = await getGithubLastEdit({
-    owner: "shield-auth",
+    owner: "TheShieldAuth",
     repo: "docs",
     path: `content/${page.file.path}`,
   });
 
   const contributors = await getFileContributors(
-    "shield-auth",
+    "TheShieldAuth",
     "docs",
     `content/${page.file.path}`,
   );
@@ -47,7 +47,7 @@ export default async function Page(props: {
       full={page.data.full}
       lastUpdate={time ? new Date(time) : undefined}
       editOnGithub={{
-        owner: "shield-auth",
+        owner: "TheShieldAuth",
         repo: "docs",
         sha: "trunk",
         // file path, make sure it's valid
