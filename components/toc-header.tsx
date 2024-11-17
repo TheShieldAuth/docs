@@ -43,7 +43,7 @@ const TocHeader = () => (
       <span className="sr-only">Shield</span>
     </a>
     <a
-      href="https://github.com/shield-auth/shield"
+      href="https://github.com/TheShieldAuth/shield"
       target="_blank"
       className={buttonVariants({ color: "secondary", size: "sm" })}
       rel="noreferrer"
