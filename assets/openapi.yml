@@ -1,9 +1,10 @@
 openapi: 3.0.0
 info:
   title: Shield
-  version: 0.1.12-alpha
+  version: 1.0.0
 servers:
-  - url: http://localhost:5555
+  - url: http://{{base_url}}
+  - url: https://api.getpostman.com
 components:
   securitySchemes:
     bearerAuth:
@@ -64,12 +65,12 @@ paths:
           schema:
             type: string
           example: "{{MASTER_API_KEY}}"
-        - name: MASTER_REALM_ID
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -121,12 +122,22 @@ paths:
         - Realm > Client > API User
       summary: Delete API User
       parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
         - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
         - name: CLIENT_ID
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: API_USER_ID
           in: path
           schema:
             type: string
@@ -146,7 +157,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{MASTER_API_KEY}}"
+          example: "{{API_KEY}}"
         - name: REALM_ID
           in: path
           schema:
@@ -166,7 +177,7 @@ paths:
           application/json:
             schema:
               type: object
-              example: "{\r\n    \"name\": \"Portal\"\r\n    // \"lock\": false\r\n}"
+              example: "{\r\n    \"name\": \"Third App\"\r\n    // \"lock\": false\r\n}"
       parameters:
         - name: api-key
           in: header
@@ -203,8 +214,13 @@ paths:
           application/json:
             schema:
               type: object
-              example: "{\r\n    \"max_concurrent_sessions\": 3\r\n    // \"lock\": false\r\n}"
+              example: "{\r\n    \"name\": \"First App\",\r\n    // \"is_account_activation_required\": false,\r\n    \"max_concurrent_sessions\": 3\r\n    // \"lock\": false\r\n}"
       parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
         - name: REALM_ID
           in: path
           schema:
@@ -229,7 +245,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{MASTER_API_KEY}}"
+          example: "{{API_KEY}}"
         - name: REALM_ID
           in: path
           schema:
@@ -248,8 +264,8 @@ paths:
   /realms/{REALM_ID}/users:
     post:
       tags:
-        - Auth
-      summary: Register
+        - Realm > User
+      summary: Add User
       requestBody:
         content:
           application/json:
@@ -261,7 +277,9 @@ paths:
                 first_name: Appu
                 last_name: Singh
                 resource:
-                  group_name: no group
+                  group:
+                    name: no group
+                    client_id: 0193388f-24d1-7310-8681-750f11e5d4e4
                   identifiers:
                     society: 01923863-ea6e-8679-7ec5-7c044ecd8895
                     membership: 01923863-ea6e-7ec5-8679-7c044ecd8896
@@ -277,22 +295,23 @@ paths:
           schema:
             type: string
           required: true
-        - name: CLIENT_ID
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         "200":
           description: Successful response
           content:
             application/json: {}
+  /realms/{MASTER_REALM_ID}/users:
     get:
       tags:
         - Realm > User
       summary: Get Users
       parameters:
-        - name: REALM_ID
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
+        - name: MASTER_REALM_ID
           in: path
           schema:
             type: string
@@ -308,6 +327,38 @@ paths:
         - Realm > User
       summary: Get Users by ID
       parameters:
+        - name: REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: USER_ID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Realm > User
+      summary: Update User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                is_account_activated: true
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
         - name: REALM_ID
           in: path
           schema:
@@ -400,6 +451,136 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  /realms/{MASTER_REALM_ID}/users/verify-email:
+    post:
+      tags:
+        - Realm > User
+      summary: Verify Email
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                token:
+                  type: string
+                  example: >-
+                    eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTkzMzQ4Yy1iMDA5LTdiYzAtODZjNy1iYzkwZWM2YjNmYmUiLCJ2ZWZpZmljYXRpb25fdHlwZSI6ImVtYWlsIiwiZXhwIjoxNzMxNzU3MDU1fQ.yAcEtOWY8eoS4XPP4XdDGGx-8V1DPgwBYNhLwIRHSJQ
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
+        - name: MASTER_REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /realms/{MASTER_REALM_ID}/users/send-email-verification:
+    post:
+      tags:
+        - Realm > User
+      summary: Send Verification Email
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                user_id:
+                  type: string
+                  example: 019305ab-5273-72f2-b290-b6bc2c06f4eb
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
+        - name: MASTER_REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /realms/{MASTER_REALM_ID}/users/{USER_ID}/forgot-password:
+    post:
+      tags:
+        - Realm > User
+      summary: Initiate Forgot Password
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties: {}
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
+        - name: MASTER_REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: USER_ID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Realm > User
+      summary: Finish Forgot Password
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                token:
+                  type: string
+                  example: >-
+                    eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTkzMzU0Zi1lMzBhLTdhZjAtOTc3Mi1iZDQ5NmExNTBkZTQiLCJ2ZWZpZmljYXRpb25fdHlwZSI6ImZvcmdvdF9wYXNzd29yZCIsInVzZXJfaWQiOiIwMTkzMDVhYi01MjczLTcyZjItYjI5MC1iNmJjMmMwNmY0ZWIiLCJleHAiOjE3MzE3NzE4MjZ9.az1_biiXdgYXtEcQhYKMPg1YYxfiQCJlIV9zTHpYpfc
+                password:
+                  type: integer
+                  example: "123456"
+                password_confirmation:
+                  type: integer
+                  example: "123456"
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
+        - name: MASTER_REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: USER_ID
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
   /realms:
     get:
       tags:
@@ -410,7 +591,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{MASTER_API_KEY}}"
+          example: "{{API_KEY}}"
       responses:
         "200":
           description: Successful response
@@ -426,7 +607,7 @@ paths:
             schema:
               type: object
               example:
-                name: SocietyGEN
+                name: New Organization
       parameters:
         - name: api-key
           in: header
@@ -444,6 +625,11 @@ paths:
         - Realm
       summary: Get Realm by ID
       parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
         - name: REALM_ID
           in: path
           schema:
@@ -454,7 +640,6 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/019239dd-5485-776c-bb18-e569f92e612a:
     patch:
       tags:
         - Realm
@@ -464,19 +649,38 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                name: SocietyGEN Dev
-                lock: false
+              example: "{\r\n    // \"name\": \"Master\",\r\n    \"is_account_activation_required\": false\r\n    // \"lock\": true\r\n}"
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{MASTER_API_KEY}}"
+        - name: REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
       responses:
         "200":
           description: Successful response
           content:
             application/json: {}
-  /realms/019239dd-eccd-7dc0-9cf1-487532d1ff96:
     delete:
       tags:
         - Realm
       summary: Delete Realm
+      parameters:
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
+        - name: REALM_ID
+          in: path
+          schema:
+            type: string
+          required: true
       responses:
         "200":
           description: Successful response
@@ -488,25 +692,16 @@ paths:
         - Auth
       summary: Login
       requestBody:
-        required: true
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
-              type: object
-              required:
-                - email
-                - password
               properties:
-                email:
+                username:
                   type: string
-                  format: email
-                  description: User's email address
-                  example: admin@shield.com
+                  example: admin@admin.com
                 password:
-                  type: string
-                  format: password
-                  description: User's password
-                  example: "password"
+                  type: integer
+                  example: "12345"
       parameters:
         - name: api-key
           in: header
@@ -528,7 +723,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/{MASTER_REALM_ID}/clients/{MASTER_CLIENT_ID}/auth/refresh-token:
+  /realms/{REALM_ID}/clients/{CLIENT_ID}/auth/refresh-token:
     post:
       tags:
         - Auth
@@ -546,13 +741,13 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{MASTER_API_KEY}}"
-        - name: MASTER_REALM_ID
+          example: "{{API_KEY}}"
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -562,7 +757,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/{MASTER_REALM_ID}/clients/{MASTER_CLIENT_ID}/auth/logout-current-session:
+  /realms/{REALM_ID}/clients/{CLIENT_ID}/auth/logout-current-session:
     post:
       tags:
         - Auth
@@ -574,12 +769,17 @@ paths:
               type: object
               example: ""
       parameters:
-        - name: MASTER_REALM_ID
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -589,7 +789,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/{MASTER_REALM_ID}/clients/{MASTER_CLIENT_ID}/auth/logout:
+  /realms/{REALM_ID}/clients/{CLIENT_ID}/auth/logout:
     post:
       tags:
         - Auth
@@ -603,12 +803,17 @@ paths:
                 access_token: >-
                   eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mjc2MjE3NjgsImlhdCI6MTcyNzYyMTQ2OCwic3ViIjoiMDE5MjNkZGQtNGFiOC03NzE3LTk5MjgtNWYzNDA0MGU4Y2ZlIiwic2lkIjoiMDE5MjNlNDMtOTEzYi03MzI4LTg2ZTMtNzIwZTNlNzljYjcxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1NTU1IiwiZmlyc3RfbmFtZSI6ImFkbWluQGFkbWluLmNvbSIsImxhc3RfbmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicGhvbmUiOiIiLCJyZXNvdXJjZSI6eyJjbGllbnRfaWQiOiIwMTkyM2RkZC00YWFlLTdlNGUtOWE3Zi1iOTU0NjBjNmYwODMiLCJjbGllbnRfbmFtZSI6ImNsaWVudCIsImdyb3VwX25hbWUiOiJkZWZhdWx0X3Jlc291cmNlX2dyb3VwIiwiaWRlbnRpZmllcnMiOnsicm9sZSI6ImFkbWluIiwicmVhbG0iOiIwMTkyM2RkZC00YWE4LTcwYWYtYjEzNC03YjRkNDBjNzc2MGQifX19.00MS10w-KHmz6hr4AT9MPvWy0VeDZbA_nVmmBgEcfYE
       parameters:
-        - name: MASTER_REALM_ID
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -618,7 +823,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/{MASTER_REALM_ID}/clients/{MASTER_CLIENT_ID}/auth/introspect:
+  /realms/{REALM_ID}/clients/{CLIENT_ID}/auth/introspect:
     post:
       tags:
         - Auth
@@ -632,12 +837,17 @@ paths:
                 access_token: >-
                   eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mjc3MTkyOTYsImlhdCI6MTcyNzcxODk5Niwic3ViIjoiMDE5MjQ0MGItYjFjNi03OGQxLWI0ZWEtZjZkYzBmZGI0MmVkIiwic2lkIjoiMDE5MjQ0MGItYjFlYy03Y2MxLThkYmYtNTE0OWE0N2JiMDk0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1NTU1IiwiZmlyc3RfbmFtZSI6ImFkbWluQGFkbWluLmNvbSIsImxhc3RfbmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicGhvbmUiOiIiLCJyZXNvdXJjZSI6eyJjbGllbnRfaWQiOiIwMTkyNDQwYi1iMWI2LTdjYjEtOTllNS00ZjAzODk4NTYxN2MiLCJjbGllbnRfbmFtZSI6ImNsaWVudCIsImdyb3VwX25hbWUiOiJkZWZhdWx0X3Jlc291cmNlX2dyb3VwIiwiaWRlbnRpZmllcnMiOnsicm9sZSI6ImFkbWluIiwicmVhbG0iOiIwMTkyNDQwYi1iMWE2LTc5MTAtOWNkMy03ZDFiMWQxZmZmNjMifX19.X6pQtYHcktrtAUccPLR_SfNNzuox-JA8PbizdRLc2e8
       parameters:
-        - name: MASTER_REALM_ID
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -647,7 +857,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/{MASTER_REALM_ID}/clients/{MASTER_CLIENT_ID}/auth/logout-my-all-sessions:
+  /realms/{REALM_ID}/clients/{CLIENT_ID}/auth/logout-my-all-sessions:
     post:
       tags:
         - Auth
@@ -659,12 +869,17 @@ paths:
               type: object
               example: ""
       parameters:
-        - name: MASTER_REALM_ID
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -674,7 +889,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /realms/{MASTER_REALM_ID}/clients/{MASTER_CLIENT_ID}/auth/logout-all:
+  /realms/{REALM_ID}/clients/{CLIENT_ID}/auth/logout-all:
     post:
       tags:
         - Auth
@@ -688,12 +903,17 @@ paths:
                 access_token: >-
                   eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mjc2MjIxMDUsImlhdCI6MTcyNzYyMTgwNSwic3ViIjoiMDE5MjNkZGQtNGFiOC03NzE3LTk5MjgtNWYzNDA0MGU4Y2ZlIiwic2lkIjoiMDE5MjNlNDgtYjcxMS03NzZhLWIwOGEtZDhjOTg0YTBlNDI4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1NTU1IiwiZmlyc3RfbmFtZSI6ImFkbWluQGFkbWluLmNvbSIsImxhc3RfbmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicGhvbmUiOiIiLCJyZXNvdXJjZSI6eyJjbGllbnRfaWQiOiIwMTkyM2RkZC00YWFlLTdlNGUtOWE3Zi1iOTU0NjBjNmYwODMiLCJjbGllbnRfbmFtZSI6ImNsaWVudCIsImdyb3VwX25hbWUiOiJkZWZhdWx0X3Jlc291cmNlX2dyb3VwIiwiaWRlbnRpZmllcnMiOnsicmVhbG0iOiIwMTkyM2RkZC00YWE4LTcwYWYtYjEzNC03YjRkNDBjNzc2MGQiLCJyb2xlIjoiYWRtaW4ifX19._G0ujBxVZVwWoPvzY7qQePt3tMD7gMrBrUVhB5yVhCo
       parameters:
-        - name: MASTER_REALM_ID
+        - name: api-key
+          in: header
+          schema:
+            type: string
+          example: "{{API_KEY}}"
+        - name: REALM_ID
           in: path
           schema:
             type: string
           required: true
-        - name: MASTER_CLIENT_ID
+        - name: CLIENT_ID
           in: path
           schema:
             type: string
@@ -715,6 +935,42 @@ paths:
             type: string
           example: >-
             01924d07-c09a-72a2-bdf6-dcab4549df73.B/vqBBCnR8Pt9sM4ZzXqLxU6QLlz7dQDe3i2yMmAwT9o/uXeKxZEYOzO6xCTvzPhHp7ach59GaT9ugrGZ+Bvmg==
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /collections/{collectionId}/transformations:
+    get:
+      tags:
+        - default
+      summary: Postman to OpenAPI converter
+      description: >-
+        Generated from cURL: curl --location --request GET
+        'https://api.getpostman.com/collections/{{collectionId}}/transformations'
+        \
+
+
+        --header 'Content-Type: application/json' \
+
+
+        --header 'x-api-key: {{postman-api-key}}'
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+          example: "{{postman-api-key}}"
+        - name: collectionId
+          in: path
+          schema:
+            type: string
+          required: true
       responses:
         "200":
           description: Successful response

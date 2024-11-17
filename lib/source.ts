@@ -4,7 +4,7 @@ import { loader } from "fumadocs-core/source";
 import { icons } from "lucide-react";
 import { createElement } from "react";
 import { createOpenAPI } from "fumadocs-openapi/server";
-import { attachFile } from "fumadocs-openapi/server";
+// import { attachFile } from "fumadocs-openapi/server";
 
 export const source = loader({
   baseUrl: "/",
